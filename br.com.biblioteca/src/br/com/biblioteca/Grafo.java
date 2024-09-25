@@ -24,10 +24,15 @@ public class Grafo {
     }
 
     public void mostrarRelacoes(int index) {
-        System.out.println("Autores relacionados:");
+        if (index < 0 || index >= listaAdj.length || listaAdj[index] == null) {
+            System.out.println("Nenhum autor relacionado encontrado.");
+            return;
+        }
+        
+        System.out.println("\nAutores relacionados:");
         Vertice atual = listaAdj[index];
         while (atual != null) {
-            System.out.println(atual.autor);
+            System.out.println("- " + atual.autor);
             atual = atual.proximo;
         }
     }

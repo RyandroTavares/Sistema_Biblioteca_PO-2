@@ -59,6 +59,14 @@ public class Biblioteca {
     public int getCount() {
         return count;
     }
+    
+    public Arvore getArvore() {
+    	return arvore;
+    }
+    
+    public Grafo getGrafo() {
+    	return grafo;
+    }
 
     public void mostrarRelacoes(int id) {
         if (id > 0 && id <= count) {

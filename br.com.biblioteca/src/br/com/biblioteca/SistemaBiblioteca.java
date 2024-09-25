@@ -16,9 +16,25 @@ public class SistemaBiblioteca {
             System.out.println("5. Remover Livro por ID");
             System.out.println("6. Sair");
             System.out.print("Escolha uma opção: ");
-            int opcao = scanner.nextInt();
-            scanner.nextLine();
-
+            
+            int opcao = 0;
+            boolean opcaoValida = false;
+            
+            while (!opcaoValida) {
+                try {
+                    opcao = scanner.nextInt();
+                    scanner.nextLine();
+                    if (opcao >= 1 && opcao <= 6) {
+                        opcaoValida = true;
+                    } else {
+                        System.out.print("Opção inválida. Por favor, escolha um número entre 1 e 6.");
+                    }
+                } catch (InputMismatchException e) {
+                    System.out.println("Entrada inválida. Por favor, insira um número inteiro.");
+                    scanner.nextLine();
+                }
+            }
+            
             switch (opcao) {
                 case 1:
                     System.out.print("Título: ");
@@ -88,6 +104,7 @@ public class SistemaBiblioteca {
                     System.out.println("1. Buscar por Título");
                     System.out.println("2. Buscar por Autor");
                     System.out.println("3. Buscar por ID");
+                    System.out.println("4. Mostrar Relações de Autores por ID");
                     System.out.print("Escolha uma opção de busca: ");
                     
                     int buscaOpcao = 0;
@@ -100,7 +117,7 @@ public class SistemaBiblioteca {
                             if (buscaOpcao >= 1 && buscaOpcao <= 4) {
                                 buscaOpcaoValida = true;
                             } else {
-                                System.out.println("Opção inválida. Por favor, escolha 1, 2 ou 3.");
+                                System.out.print("Opção inválida. Por favor, escolha 1, 2, 3 ou 4.");
                             }
                         } catch (InputMismatchException e) {
                             System.out.println("Entrada inválida. Por favor, insira um número inteiro.");
@@ -109,24 +126,26 @@ public class SistemaBiblioteca {
                     }
 
                     switch (buscaOpcao) {
-                        case 1:
-                            System.out.print("Digite o título do livro: ");
-                            String tituloBusca = scanner.nextLine();
-                            Ordenacao.buscaPorTitulo(biblioteca.getAcervo(), biblioteca.getCount(), tituloBusca);
-                            break;
-                        case 2:
-                            System.out.print("Digite o autor do livro: ");
-                            String autorBusca = scanner.nextLine();
-                            Ordenacao.buscaPorAutor(biblioteca.getAcervo(), biblioteca.getCount(), autorBusca);
-                            break;
+                    	case 1:
+                    		System.out.print("Digite o título do livro: ");
+                    		String tituloBusca = scanner.nextLine();
+                    		biblioteca.getArvore().buscarPorTitulo(tituloBusca);
+                    		break;
+                    	case 2:
+                    		System.out.print("Digite o autor do livro: ");
+                    		String autorBusca = scanner.nextLine();
+                    		biblioteca.getArvore().buscarPorAutor(autorBusca);
+                    		break;
                         case 3:
                             System.out.print("Digite o ID do livro: ");
                             int idBusca = scanner.nextInt();
                             scanner.nextLine();
                             Ordenacao.buscaPorId(biblioteca.getAcervo(), biblioteca.getCount(), idBusca);
                             break;
-                        default:
-                            System.out.println("Opção de busca inválida.");
+                        case 4:
+                        	System.out.print("Digite o ID do livro para ver os autores relacionados: ");
+                        	int idRelacao = scanner.nextInt();
+                        	biblioteca.mostrarRelacoes(idRelacao);
                     }
                     break;
 
@@ -136,7 +155,7 @@ public class SistemaBiblioteca {
                     scanner.nextLine();
                     biblioteca.removerLivroPorId(id);
                     break;
-
+                    
                 case 6:
                     System.out.println("Saindo...");
                     scanner.close();
